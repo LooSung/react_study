@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const Register = () => {
     // 통합 State를 관리
@@ -9,18 +9,30 @@ const Register = () => {
         bio: '',
     });
 
+    // 랜더링에 영향을 받지 않는 기능을 사용할때 적용하자.
+    const countRef = useRef();
+    const inputRef = useRef();
+
     // 통합 State set
     const onChange = (event) => {
+        countRef.current++;
         setInput({
             ...input,
             [event.target.name]: event.target.value,
         });
     };
 
+    const onSubmit = () => {
+        if (input.name === '') {
+            inputRef.current.focus();
+        }
+    };
+
     return (
         <div>
             <div>
                 <input
+                    ref={inputRef}
                     name='name'
                     value={input.name}
                     onChange={onChange}
@@ -49,6 +61,10 @@ const Register = () => {
             </div>
             <div>
                 <textarea name='bio' value={input.bio} onChange={onChange} />
+            </div>
+
+            <div>
+                <button> onClick=(onSubmit) </button>
             </div>
         </div>
     );
