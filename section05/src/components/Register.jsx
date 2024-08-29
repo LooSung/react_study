@@ -1,46 +1,46 @@
 import { useState } from 'react';
 
 const Register = () => {
-    const [name, setName] = useState('이름');
-    const [birth, setBirth] = useState('');
-    const [country, setcountry] = useState('');
-    const [bio, setBio] = useState('');
+    // 통합 State를 관리
+    const [input, setInput] = useState({
+        name: '',
+        birth: '',
+        country: '',
+        bio: '',
+    });
 
-    const onChangeName = (event) => {
-        setName(event.target.value);
-    };
-
-    const onChangeBirth = (event) => {
-        setBirth(event.target.value);
-    };
-
-    const onChangeCountry = (event) => {
-        setcountry(event.target.value);
-    };
-
-    const onChangeBio = (event) => {
-        setBio(event.target.value);
+    // 통합 State set
+    const onChange = (event) => {
+        setInput({
+            ...input,
+            [event.target.name]: event.target.value,
+        });
     };
 
     return (
         <div>
             <div>
                 <input
-                    value={name}
-                    onChange={onChangeName}
+                    name='name'
+                    value={input.name}
+                    onChange={onChange}
                     placeholder={'이름'}
                 />
             </div>
             <div>
                 <input
                     type='date'
-                    value={birth}
-                    onChange={onChangeBirth}
-                    placeholder={'생년월일'}
+                    name='birth'
+                    value={input.birth}
+                    onChange={onChange}
                 />
             </div>
             <div>
-                <select value={country} onChange={onChangeCountry}>
+                <select
+                    name='country'
+                    value={input.country}
+                    onChange={onChange}
+                >
                     <option></option>
                     <option value='kr'>한국</option>
                     <option value='us'>미국</option>
@@ -48,7 +48,7 @@ const Register = () => {
                 </select>
             </div>
             <div>
-                <textarea value={bio} onChange={onChangeBio} />
+                <textarea name='bio' value={input.bio} onChange={onChange} />
             </div>
         </div>
     );
