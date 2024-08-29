@@ -1,13 +1,12 @@
 import './App.css';
-import Bulb from './components/Bulb';
-import Counter from './components/Counter';
+
+import Register from './components/Register';
 
 // 부모 Component
 function App() {
     return (
         <>
-            <Bulb />
-            <Counter />
+            <Register />
         </>
     );
 }
