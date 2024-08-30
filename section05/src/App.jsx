@@ -1,12 +1,13 @@
 import './App.css';
 
 import Register from './components/Register';
+import HookExam from './components/HookExam';
 
 // 부모 Component
 function App() {
     return (
         <>
-            <Register />
+            <HookExam />
         </>
     );
 }
