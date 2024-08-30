@@ -6,6 +6,7 @@ import Controller from './components/Controller';
 import { useState } from 'react';
 
 function App() {
+    // State Lifting (State 끌어 올리기)
     const [count, setCounter] = useState(0);
 
     const onClickBtn = (value) => {
