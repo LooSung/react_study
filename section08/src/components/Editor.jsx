@@ -20,7 +20,7 @@ const Editor = ({ onCreate }) => {
     };
 
     const onKeyDown = (event) => {
-        if (event.keycode === 13) {
+        if (event.key === 'Enter') {
             onSubmit();
         }
     };
@@ -34,7 +34,7 @@ const Editor = ({ onCreate }) => {
                 onKeyDown={onKeyDown}
                 placeholder='새로운 Todo...'
             ></input>
-            <button onClick={onSubmit()}>Add</button>
+            <button onClick={onSubmit}>Add</button>
         </div>
     );
 };

@@ -35,18 +35,42 @@ function App() {
         const newTodo = {
             id: idRef.current++,
             isDone: false,
-            content: 'React Study',
+            content: content,
             date: new Date().getTime(),
         };
 
         setTodos([newTodo, ...todos]);
     };
 
+    const onUpdate = (targetId) => {
+        setTodos(
+            todos.map((todo) => {
+                if (todo.id === targetId) {
+                    return {
+                        ...todo,
+                        isDone: !todo.isDone,
+                    };
+                }
+
+                return todo;
+            })
+        );
+    };
+
+    // 3항 연산자 사용
+    // const onUpdate = (targetId) => {
+    //     setTodos(
+    //         todos.map((todo) => {
+    //             todo.id == targetId ? { ...todo, isDone: !todo.isDone } : todo;
+    //         })
+    //     );
+    // };
+
     return (
         <div className='App'>
             <Header />
             <Editor onCreate={onCreate} />
-            <List />
+            <List todos={todos} onUpdate={onUpdate} />
         </div>
     );
 }
