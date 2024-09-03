@@ -2,14 +2,14 @@ import { useContext } from 'react';
 
 import './List.css';
 import TodoItem from './TodoItem';
-import { TodoContext } from '../App';
+import { TodoStateContext } from '../App';
 
 import { useState, useMemo } from 'react';
 
 const List = () => {
     const [search, setSearch] = useState('');
 
-    const { todo } = useContext(TodoContext);
+    const todos = useContext(TodoStateContext);
 
     // Memorization -> 의존성배열 : deps (이 Count연산은 1번만 실행되게 만들었다.)
     // 구조분해 할당해서 어떤 데이터가 Memory에 저장 될 것인지 선정

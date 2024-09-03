@@ -1,6 +1,13 @@
 import './App.css';
 
-import { useRef, useReducer, useCallback, createContext } from 'react';
+import {
+    useRef,
+    useReducer,
+    useCallback,
+    createContext,
+    memo,
+    useMemo,
+} from 'react';
 
 import Header from './components/Header';
 import Editor from './components/Editor';
@@ -45,7 +52,8 @@ function reducer(state, action) {
 }
 
 // 계속되는 App() 컴포넌트의 Re-Renderign을 피하기 위해서
-export const TodoContext = createContext();
+export const TodoDispatchContext = createContext();
+export const TodoStateContext = createContext();
 
 function App() {
     const [todos, dispatch] = useReducer(reducer, mockData);
@@ -74,11 +82,21 @@ function App() {
         }),
         []);
 
-    const onDelete = useCallback((targetId) => {
-        dispatch({
-            type: 'DELETE',
-            data: { targetId: targetId },
-        });
+    const onDelete =
+        ((useCallback = (targetId) => {
+            dispatch({
+                type: 'DELETE',
+                data: { targetId: targetId },
+            });
+        }),
+        []);
+
+    const memorizedDispatch = useMemo(() => {
+        return {
+            onCreate,
+            onUpdate,
+            onDelete,
+        };
     }, []);
 
     // Provide Context
@@ -86,12 +104,12 @@ function App() {
         <div className='App'>
             {/* /<Exam /> */}
             <Header />
-            <TodoContext.Provider
-                value={{ todos, onCreate, onUpdate, onDelete }}
-            >
-                <Editor onCreate={onCreate} />
-                <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
-            </TodoContext.Provider>
+            <TodoStateContext.Provider value={todos}>
+                <TodoDispatchContext.Provider value={memorizedDispatch}>
+                    <Editor />
+                    <List />
+                </TodoDispatchContext.Provider>
+            </TodoStateContext.Provider>
         </div>
     );
 }
