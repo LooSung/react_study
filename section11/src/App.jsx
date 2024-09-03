@@ -1,6 +1,6 @@
 import './App.css';
 
-import { useRef, useReducer, useCallback } from 'react';
+import { useRef, useReducer, useCallback, createContext } from 'react';
 
 import Header from './components/Header';
 import Editor from './components/Editor';
@@ -44,6 +44,9 @@ function reducer(state, action) {
     }
 }
 
+// 계속되는 App() 컴포넌트의 Re-Renderign을 피하기 위해서
+export const TodoContext = createContext();
+
 function App() {
     const [todos, dispatch] = useReducer(reducer, mockData);
     const idRef = useRef(3);
@@ -78,12 +81,17 @@ function App() {
         });
     }, []);
 
+    // Provide Context
     return (
         <div className='App'>
             {/* /<Exam /> */}
             <Header />
-            <Editor onCreate={onCreate} />
-            <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+            <TodoContext.Provider
+                value={{ todos, onCreate, onUpdate, onDelete }}
+            >
+                <Editor onCreate={onCreate} />
+                <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+            </TodoContext.Provider>
         </div>
     );
 }
