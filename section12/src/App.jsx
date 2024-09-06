@@ -29,15 +29,21 @@ import Notfound from './pages/Notfound';
 const mockData = [
     {
         id: 1,
-        createdDate: new Date().getTime,
+        createdDate: new Date('2024-09-06').getTime(),
         emotionId: 1,
         content: '내용이다.',
     },
     {
         id: 2,
-        createdDate: new Date().getTime,
+        createdDate: new Date('2024-09-05').getTime(),
         emotionId: 2,
         content: '내용이다. 2',
+    },
+    {
+        id: 3,
+        createdDate: new Date('2024-08-05').getTime(),
+        emotionId: 3,
+        content: '내용이다. 3',
     },
 ];
 
@@ -58,12 +64,12 @@ function reducer(state, action) {
     }
 }
 
-const DiaryStateContext = createContext();
-const DiartDispatchContext = createContext();
+export const DiaryStateContext = createContext();
+export const DiartDispatchContext = createContext();
 
 function App() {
     const [data, dispatch] = useReducer(reducer, mockData);
-    const idRef = useRef(3);
+    const idRef = useRef(4);
 
     const onCreate = (createdDate, emotionId, content) => {
         dispatch({
